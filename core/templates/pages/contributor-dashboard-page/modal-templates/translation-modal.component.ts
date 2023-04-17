@@ -21,7 +21,7 @@ import isEqual from 'lodash/isEqual';
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { downgradeComponent } from '@angular/upgrade/static';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import {component} from '@angular/core';
 import { AlertsService } from 'services/alerts.service';
 import { CkEditorCopyContentService } from 'components/ck-editor-helpers/ck-editor-copy-content.service';
 import { ContextService } from 'services/context.service';
@@ -95,10 +95,20 @@ export class TranslationError {
     return this._hasUntranslatedElements;
   }
 }
+export class TextBox{}
 
 @Component({
   selector: 'oppia-translation-modal',
   templateUrl: './translation-modal.component.html'
+})
+@Component
+({
+  selector: 'app-textbook',
+  template:
+  <div>
+    <label for="textbook">Enter text:</label>
+    <div id="textbox" contenteditable="true" tebindex="0" role="textbook" ></div>
+  </div>
 })
 export class TranslationModalComponent {
   // These properties below are initialized using Angular lifecycle hooks
@@ -552,6 +562,23 @@ export class TranslationModalComponent {
       this.contextService.resetImageSaveDestination();
       this.close();
     }
+    const rte = document.querySelector('.rte');
+    rte.addEventListener('keydown', e=>{
+      if(e.key == 'b' && (e.ctrlKey || e.metaKey))
+      {
+        document.execCommand('bold', false, null);
+        e.preventDefault();
+      }
+      else if(e.key === 'i' && (e.ctrlKey || e.metaKey)){
+        document.execCommand('italic', false, null);
+        e.preventDefault();
+      }
+      else if(e.key === 'u' && (e.ctrlKey || e.metaKey))
+      {
+        document.execCommand('underline', false, null);
+        e.preventDefault();
+      }
+    })
   }
 }
 

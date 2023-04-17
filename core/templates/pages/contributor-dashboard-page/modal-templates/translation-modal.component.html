@@ -19,6 +19,7 @@
     </button>
   </div>
 </div>
+<div class="rte" contenteditable="true"></div>
 <div class="modal-body">
   <div class="oppia-loading-text" *ngIf="loadingData || uploadingTranslation">
     <div class="oppia-loading-text1 oppia-animate-fadein">
@@ -36,6 +37,7 @@
       <strong>Please translate the given {{ activeContentType }} in {{ languageDescription }}:</strong>
       <a class="oppia-skip-button" *ngIf="moreAvailable" (click)="skipActiveTranslation()">skip</a>
     </div>
+    
     <div *ngIf="!loadingData && !uploadingTranslation"
          class="oppia-text-to-translate-container"
          [ngClass]="isContentExpanded ? 'oppia-container-expanded' : 'oppia-container-contracted'"
@@ -278,6 +280,14 @@
   .oppia-translation-error-section {
     color: red;
   }
+  .rte
+  {
+    border: 1px solid #ccc;
+    padding: 5px;
+    height: 150px;
+    font-size: 16px;
+  }
+
 
   @media screen and (max-width: 700px) {
     .oppia-container-expanded {
